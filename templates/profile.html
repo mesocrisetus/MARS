@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{url_for('static',filename='css/profile.css')}}">
+    <title>Perfil</title>
+</head>
+<body>
+    <div class="container">
+        <nav class="sidebar">
+            <ul>             
+                <img src="{{ pic }}" class="profile-pic">   
+                <li><a href="/index/{{user}}"><ion-icon name="home-outline"></ion-icon> Home</a></li>
+                <li><a href="/faq/{{user}}"><ion-icon name="help-circle-outline"></ion-icon> FAQ</a></li>
+                <li><a href="/logout"><ion-icon name="log-out-outline"></ion-icon> Cerrar Sesión</a></li>
+            </ul>
+        </nav>
+        
+        <main>
+            <section class="profile-section">
+                <h1>{{user}}</h1>
+                <div class="profile-info">
+                    <img src="{{ pic }}" alt="Perfil" class="profile-pic-large" >
+                    <form action="/upload" method="POST" enctype="multipart/form-data">
+                        <input type="hidden" name="username" value="{{user}}" >
+                        <input type="file" name="file" id="file"/>
+                        <input type="submit" value="Subir foto"/>
+                    </form>
+                    {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                    {% for message in messages %}
+                    <label for="">{{ message }}</label>
+                    {% endfor%}
+                    {% endif %}
+                    {% endwith%}
+                    
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</body>
+</html>

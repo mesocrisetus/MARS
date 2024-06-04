@@ -1,0 +1,173 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    background-image: url(/static/img/fondo.jpg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    background-attachment: fixed;  /* Añade esta línea */
+    color: #fff;
+}
+
+.container {
+    display: flex;
+    width: 100%;
+    max-width: 1200px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+.sidebar {
+    width: 250px;
+    background: rgba(0, 0, 0, 0.8);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.sidebar ul {
+    list-style: none;
+    width: 100%;
+}
+
+.sidebar li {
+    margin: 20px 0;
+    width: 100%;
+}
+
+.sidebar a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+}
+
+.sidebar a ion-icon {
+    margin-right: 10px;
+    font-size: 1.5rem;
+}
+
+.sidebar .logout {
+    margin-top: auto;
+}
+
+main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+
+.post-section {
+    margin-bottom: 30px;
+}
+
+.profile-box {
+    display: flex;
+    align-items: center;
+}
+
+.profile-pic {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.username {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.post-box {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.post-box textarea {
+    width: 100%;
+    height: 100px;
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+    background: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    font-size: 1rem;
+    resize: none;
+}
+
+.post-box button {
+    margin-top: 10px;
+    width: 100px;
+    align-self: flex-end;
+    height: 40px;
+    border-radius: 20px;
+    background-color: rgba(255, 255, 255, 1);
+    border: none;
+    outline: none;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: all 0.4s ease;
+}
+
+.post-box button:hover {
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.feed-section {
+    flex: 1;
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+.feed {
+    display: flex;
+    flex-direction: column;
+}
+
+.post {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 20px;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+}
+
+.post .profile-pic {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+}
+
+.post-content {
+    flex: 1;
+}
+
+.post-content .username {
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.post-content p {
+    margin-top: 5px;
+    font-size: 0.9rem;
+    line-height: 1.4;
+}

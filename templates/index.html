@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{url_for('static',filename='css/index.css')}}">
+    <title>Red Social</title>
+</head>
+<body>
+    <div class="container">
+        <nav class="sidebar">
+            <ul>
+                <img src="{{ pic }}" class="profile-pic">
+                <li><a href="/profile/{{user}}"><ion-icon name="person-circle-outline"></ion-icon> Perfil</a></li>
+                <li><a href="/index/{{user}}"><ion-icon name="home-outline"></ion-icon> Home</a></li>
+                <li><a href="/faq/{{user}}"><ion-icon name="help-circle-outline"></ion-icon> FAQ</a></li>
+                <li><a href="/logout"><ion-icon name="log-out-outline"></ion-icon> Cerrar Sesión</a></li>
+            </ul>
+            
+            
+            
+        </nav>
+        
+        <main>
+            <section class="post-section">
+                <form method="post">
+
+                    <div class="profile-box">
+                        <img src="{{ pic }}" alt="Perfil" class="profile-pic">
+                        <input type="hidden" name="_user" value="{{user}}">
+                        <span class="username">{{user}}</span>
+                    </div>
+                    <div class="post-box">
+                        <textarea placeholder="¿Qué estás pensando?" id="text" name="text" required></textarea>
+                        <button formaction="/publicar" type="submit">Publicar</button>
+                    </div>
+                </form>
+            </section>
+            
+            <section class="feed-section" id="feed">
+                <div class="feed">
+                    {% for row in posts%}
+                    <!-- Ejemplo de un post -->
+                    <div class="post">
+                        <img src="{{ url_for('static', filename='profile_pics/')}}{{row[2]}}{{'.jpg'}}" alt="User1" class="profile-pic">
+                        <div class="post-content">
+                            <span class="username">{{row[2]}}</span>
+                            <p>{{row[1]}}</p>
+                        </div>
+                    </div>
+                    {%endfor%}
+                    <!-- Añadir más posts aquí -->
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</body>
+</html>

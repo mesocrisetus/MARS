@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{url_for('static',filename='css/form.css')}}">
+    <title>Index</title>
+</head>
+<body>
+    <section>
+        <div class="form-container">
+            <form action="" id="loginForm" method="post">
+                <h1>Inicio</h1>
+                <div class="inputbox">
+                    <ion-icon name="mail-outline"></ion-icon>
+                    <input type="text" name="user" required>
+                    <label for="">Usuario</label>
+                </div>
+                <div class="inputbox">
+                    <ion-icon name="lock-closed-outline"></ion-icon>
+                    <input type="password" name="password" required>
+                    <label for="">Contraseña</label>
+                </div>
+                <div class="flaskmsg">
+                    {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                    {% for message in messages %}
+                    <label for="">{{ message }}</label>
+                    {% endfor%}
+                    {% endif %}
+                    {% endwith%}
+                </div>
+                <br/>                
+                <button type="submit" type="submit" formaction="/login">Iniciar</button>
+                <div class="switch-form">
+                    <p>No tengo una cuenta <a href="#" id="switchToRegister">Registrarse</a></p>
+                </div>
+            </form>
+            <form action="" id="registerForm" class="hidden" method="post">
+                <h1>Registro</h1>
+                <div class="inputbox">
+                    <ion-icon name="person-outline"></ion-icon>
+                    <input type="text" name="_user" required>
+                    <label for="">Nombre de Usuario</label>
+                </div>                
+                <div class="inputbox">
+                    <ion-icon name="lock-closed-outline"></ion-icon>
+                    <input type="password" name="_password" required>
+                    <label for="">Contraseña</label>
+                </div>
+
+                <button type="submit" formaction="/registrar">Registrarse</button>
+                <div class="switch-form">
+                    <p>Ya tengo una cuenta <a href="#" id="switchToLogin">Iniciar Sesión</a></p>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script src="{{url_for('static',filename='js/script.js')}}"></script>
+</body>
+</html>
