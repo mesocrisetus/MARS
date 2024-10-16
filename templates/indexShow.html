@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/index.css">
+    <title>Red Social</title>
+</head>
+<body>
+    <div class="container">
+        <nav class="sidebar">
+            <ul>
+                <img src="/static/profile_pics/kevin.jpg" class="profile-pic">
+                <li><a href="/profile/{{user}}"><ion-icon name="person-circle-outline"></ion-icon> Perfil</a></li>
+                <li><a href="/index/{{user}}"><ion-icon name="home-outline"></ion-icon> Home</a></li>
+                <li><a href="/faq/{{user}}"><ion-icon name="help-circle-outline"></ion-icon> FAQ</a></li>
+                <li><a href="/logout"><ion-icon name="log-out-outline"></ion-icon> Cerrar Sesión</a></li>
+            </ul>
+            
+            
+            
+        </nav>
+        
+        <main>
+            <section class="post-section">
+                <form method="post">
+
+                    <div class="profile-box">
+                        <img src="/static/profile_pics/kevin.jpg" alt="Perfil" class="profile-pic">
+                        <input type="hidden" name="_user" value="{{user}}">
+                        <span class="username">Kevin</span>
+                    </div>
+                    <div class="post-box">
+                        <textarea placeholder="¿Qué estás pensando?" id="text" name="text" required></textarea>
+                        <button formaction="/publicar" type="submit">Publicar</button>
+                    </div>
+                </form>
+            </section>
+            
+            <section class="feed-section" id="feed">
+                <div class="feed">
+                    
+                    <!-- Ejemplo de un post -->
+                    <div class="post">
+                        <img src="/static/profile_pics/kevin.jpg" alt="User1" class="profile-pic">
+                        <div class="post-content">
+                            <span class="username">Kevin</span>
+                            <p>Hola a todos!</p>
+                        </div>
+                    </div>
+                    <div class="post">
+                        <img src="/static/profile_pics/alex.jpg" alt="User1" class="profile-pic">
+                        <div class="post-content">
+                            <span class="username">Alex</span>
+                            <p>Este es mi primer post!</p>
+                        </div>
+                    </div>
+                    <div class="post">
+                        <img src="/static/profile_pics/eris.jpg" alt="User1" class="profile-pic">
+                        <div class="post-content">
+                            <span class="username">Eris</span>
+                            <p>Me encanta esta nueva app</p>
+                        </div>
+                    </div>
+                    <div class="post">
+                        <img src="/static/profile_pics/test.jpg" alt="User1" class="profile-pic">
+                        <div class="post-content">
+                            <span class="username">Atavico</span>
+                            <p>Esta es nuesta cuenta oficial!</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Añadir más posts aquí -->
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</body>
+</html>
