@@ -92,7 +92,7 @@ def index(user):
         for row in pic_name:
             pic_name = row[4]
         
-        print(pic_name)
+        
         pic= '/static/profile_pics/' +  pic_name
 
         
@@ -148,7 +148,7 @@ def profile(user):
         for row in pic_name:
             pic_name = row[4]
         
-        print(pic_name)
+        
         pic= '/static/profile_pics/' +  pic_name
 
         #panel de admin
@@ -172,12 +172,12 @@ def profile(user):
             connection.commit()
 
             result = cursor.fetchall()
-            print(result)
+            
             
             result = result[::-1]  # Invertir el orden de los resultados       
             cursor.close()            
             connection.close()
-            print(result)
+            
             # retornar el perfil root
             return render_template('profile.html',pic = pic,user={0},posts=result,users = users).format(user)
         else:
