@@ -4,7 +4,7 @@ from flask_mysqldb import MySQL
 import os
 import db_modulos as db_m
 import database as db
-
+import sqlite3
 
 
 # Ruta para guardar las fotos
@@ -21,10 +21,9 @@ app.secret_key = os.urandom(24)
 
 
 
- 
 
 
-######################################################## FORMULARIO ########################################################
+# Area formulario
 
 # Ruta para iniciar sesion - Ruta por defecto
 @app.route('/')
@@ -62,9 +61,8 @@ def before_request():
     
     
 
-###########################################################################################################################
+# Area registro
 
-######################################################## REGISTRO ########################################################
 # Registrarse
 @app.route('/registro')
 def registro():    
@@ -74,25 +72,44 @@ def registro():
 def registrar():
     user = request.form['_user']
     password = request.form['_password']    
-    registrar = db_m.registrar(user,password)
+    db_m.registrar(user,password)
     message = 'Registro exitoso'    
     flash(message)    
     return redirect('/')
 
-###########################################################################################################################
+# Area index
 
-######################################################## INDEX ############################################################
 # Ruta index 
 @app.route('/index/<user>')
 def index(user):
     # Valida si hay una sesion de usuario activa
     if g.user:
-        pic_name = user + '.jpg'    
-        pic = '/static/profile_pics/' + pic_name    
+
+        #Cargar la foto de perfil
+        connection = sqlite3.connect("Sqldatabase/mars.db")
+        cursor = connection.cursor()    
+        sql = "SELECT * FROM users WHERE user='%s'"%user
+        cursor.execute(sql)
+        connection.commit()
+        pic_name =  cursor.fetchall()
+        for row in pic_name:
+            pic_name = row[4]
+        
+        print(pic_name)
+        pic= '/static/profile_pics/' +  pic_name
+
+        
+        
         users = db_m.obtener_users()
-        cursor = db.database.cursor()
+        
+        connection = sqlite3.connect("Sqldatabase/mars.db")
+        cursor = connection.cursor()        
+
         sql = "SELECT * FROM post"
         cursor.execute(sql)
+        connection.commit()
+
+
         result = cursor.fetchall()
         result = result[::-1]  # Invertir el orden de los resultados       
         cursor.close()            
@@ -101,11 +118,9 @@ def index(user):
     else:
         return render_template('form.html')
 
-###########################################################################################################################
 
 
-######################################################## POST ############################################################
-
+# Area post
 
 # Publicar un POST
 
@@ -117,17 +132,27 @@ def publicar():
     return redirect(url_for('index',user=user))
     
     
-###########################################################################################################################
+
+# Area perfil
 
 
-######################################################## PERFIL ############################################################
 # Ruta perfil
 
 @app.route('/profile/<user>')
 def profile(user):
     if g.user:
-        pic_name = user + '.jpg'
-        pic = '/static/profile_pics/' + pic_name    
+        #Cargar la foto de perfil
+        connection = sqlite3.connect("Sqldatabase/mars.db")
+        cursor = connection.cursor()    
+        sql = "SELECT * FROM users WHERE user='%s'"%user
+        cursor.execute(sql)
+        connection.commit()
+        pic_name =  cursor.fetchall()
+        for row in pic_name:
+            pic_name = row[4]
+        
+        print(pic_name)
+        pic= '/static/profile_pics/' +  pic_name
         return render_template('profile.html',pic = pic,user={0}).format(user)
     
     # Si no se encuentra una sesion activa, nos regresara al formulario
@@ -141,16 +166,31 @@ def upload():
     if request.method =='POST':
         f = request.files['file']
         user = request.form['username']
+
+        #subir la foto
         pic_name = request.form['username'] + '.jpg'
         f.save(os.path.join(app.config['UPLOAD_FOLDER'],pic_name))
+
+
+        #Actualizar la foto en la BD
+
+        connection = sqlite3.connect("Sqldatabase/mars.db")
+        cursor = connection.cursor()    
+        sql = "UPDATE users SET pic_name='%s' WHERE user='%s'"%(pic_name,user)           
+        cursor.execute(sql)
+        connection.commit()
+
+        pic = '/static/profile_pics/' + pic_name
+
         message = 'Se ha subido la foto de perfil'    
         flash(message)
-        pic = '/static/profile_pics/' + pic_name
+        
         return redirect(url_for('profile',user=user, pic = pic))
     
-###########################################################################################################################
 
-######################################################## FAQ ############################################################
+# Area FAQ
+
+
 # Ruta FAQ
 
 @app.route('/faq/<user>')
@@ -162,16 +202,16 @@ def faq(user):
     else:
         return render_template('form.html')
 
-###########################################################################################################################
 
-######################################################## CERRAR SESION ############################################################
+#Area cerrar sesion
 
 @app.route('/logout')
 def logout():
     session.pop('user',None)
     return redirect("/")
 
-###########################################################################################################################
+
+# Main
 
 if __name__ == '__main__':
     app.run(debug=True) 
