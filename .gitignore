@@ -1,2 +1,20 @@
-/__pychache__
-/_pychache_
+**/__pycache__/
+__pycache__/
+
+# Archivos de configuración locales
+
+*.log
+.env
+
+# Archivos de compilación
+
+dist/
+build/
+
+# Directorios de dependencias
+
+node_modules/
+vendor/
+
+# Archivos del sistema operativo
+.DS_Store

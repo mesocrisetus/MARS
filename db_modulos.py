@@ -1,4 +1,3 @@
-import database as db
 import sqlite3
 
 
