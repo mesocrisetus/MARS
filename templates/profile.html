@@ -37,6 +37,33 @@
                     
                 </div>
             </section>
+            <br>
+            <br>
+            <section class="feed-section" id="feed">
+                <div class="feed">
+                    {% if posts%}
+                    <h1>Panel de administración </h1>
+                    {% endif %}
+                    {% for row in posts%}
+                    <!-- Ejemplo de un post -->
+                    
+                    <div class="post">
+                        <img src="{{ url_for('static', filename='profile_pics/')}}{{row[2]}}{{'.jpg'}}" alt="User1" class="profile-pic">
+                        <div class="post-content">
+                            <span class="username">{{row[2]}}</span>
+                            <p>{{row[1]}}</p>
+                        </div>
+                        <form action="/delete_post" method="POST" enctype="multipart/form-data">
+                            <input type="hidden" name="adminName" value="{{user}}" > 
+                            <input type="hidden" name="username" value="{{row[2]}}" > 
+                            <input type="hidden" name="post_id" value="{{row[0]}}" >                            
+                            <input type="submit" value="Eliminar"/>
+                        </form>
+                    </div>
+                    {%endfor%}
+                    <!-- Añadir más posts aquí -->
+                </div>
+            </section>
         </main>
     </div>
 

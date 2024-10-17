@@ -96,7 +96,7 @@ def index(user):
         pic= '/static/profile_pics/' +  pic_name
 
         
-        
+        #cargar posts
         users = db_m.obtener_users()
         
         connection = sqlite3.connect("Sqldatabase/mars.db")
@@ -150,7 +150,38 @@ def profile(user):
         
         print(pic_name)
         pic= '/static/profile_pics/' +  pic_name
-        return render_template('profile.html',pic = pic,user={0}).format(user)
+
+        #panel de admin
+        connection = sqlite3.connect("Sqldatabase/mars.db")
+        cursor = connection.cursor()    
+        sql = "SELECT * FROM users WHERE user='%s'"%user
+        cursor.execute(sql)
+        connection.commit()
+        root=0
+        root_or_not =  cursor.fetchall()
+        for row in root_or_not:
+            root = row[5]
+        
+        if root == 1:    
+            #cargar posts
+            users = db_m.obtener_users()
+            connection = sqlite3.connect("Sqldatabase/mars.db")
+            cursor = connection.cursor()
+            sql = "SELECT * FROM post"
+            cursor.execute(sql)
+            connection.commit()
+
+            result = cursor.fetchall()
+            print(result)
+            
+            result = result[::-1]  # Invertir el orden de los resultados       
+            cursor.close()            
+            connection.close()
+            print(result)
+            # retornar el perfil root
+            return render_template('profile.html',pic = pic,user={0},posts=result,users = users).format(user)
+        else:
+            return render_template('profile.html',pic = pic,user={0}).format(user)
     
     # Si no se encuentra una sesion activa, nos regresara al formulario
     else:
@@ -183,7 +214,27 @@ def upload():
         flash(message)
         
         return redirect(url_for('profile',user=user, pic = pic))
-    
+
+
+# Borrar un post
+@app.route('/delete_post', methods = ['GET', 'POST'])
+def delete_post():
+    if request.method =='POST':
+        adminName= request.form['adminName']
+        user = request.form['username']
+        post_id  =request.form['post_id']
+
+        connection = sqlite3.connect("Sqldatabase/mars.db")
+        cursor = connection.cursor()    
+        sql = "DELETE FROM post WHERE id='%s'"%(post_id)           
+        cursor.execute(sql)
+        connection.commit()
+
+        cursor.close()
+        connection.close()
+
+        return redirect(url_for('profile',user=adminName))
+
 
 # Area FAQ
 
@@ -211,4 +262,4 @@ def logout():
 # Main
 
 if __name__ == '__main__':
-    app.run() 
+    app.run(debug=True) 
