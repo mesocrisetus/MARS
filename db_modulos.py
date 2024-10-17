@@ -59,12 +59,12 @@ def obtener_users():
     return result
 
 # PUBLICAR UN POST     
-def publicar(text,user):
+def publicar(text,user,pic_name):
     connection = sqlite3.connect("Sqldatabase/mars.db")
     cursor = connection.cursor()
 
     try: 
-        sql = "INSERT INTO post (descrp,p_username) VALUES ('%s','%s')"%(text,user)           
+        sql = "INSERT INTO post (descrp,p_username,p_pic_name) VALUES ('%s','%s','%s')"%(text,user,pic_name)           
         cursor.execute(sql)
         connection.commit()
     except sqlite3.Error as e:

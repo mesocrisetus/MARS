@@ -100,17 +100,14 @@ def index(user):
         users = db_m.obtener_users()
         
         connection = sqlite3.connect("Sqldatabase/mars.db")
-        cursor = connection.cursor()        
-
+        cursor = connection.cursor()               
         sql = "SELECT * FROM post"
         cursor.execute(sql)
         connection.commit()
-
-
         result = cursor.fetchall()
-        result = result[::-1]  # Invertir el orden de los resultados       
+        result = result[::-1]  # Invertir el orden de los resultados              
         cursor.close()            
-        return render_template('index.html',username = session['user'], posts=result,pic=pic,users = users,user={0}).format(user)
+        return render_template('index.html',username = session['user'], posts=result,pic_name=pic_name,pic=pic,users = users,user={0}).format(user)
     # Si no se encuentra una sesion activa, nos regresara al formulario
     else:
         return render_template('form.html')
@@ -125,7 +122,8 @@ def index(user):
 def publicar():     
     text = request.form['text']
     user = request.form['_user']
-    db_m.publicar(text,user)
+    pic_name = request.form['pic_name']
+    db_m.publicar(text,user,pic_name)
     return redirect(url_for('index',user=user))
     
     

@@ -27,6 +27,7 @@
 
                     <div class="profile-box">
                         <img src="{{ pic }}" alt="Perfil" class="profile-pic">
+                        <input type="hidden" name="pic_name" value="{{pic_name}}">
                         <input type="hidden" name="_user" value="{{user}}">
                         <span class="username">{{user}}</span>
                     </div>
@@ -41,8 +42,9 @@
                 <div class="feed">
                     {% for row in posts%}
                     <!-- Ejemplo de un post -->
-                    <div class="post">
-                        <img src="{{ url_for('static', filename='profile_pics/')}}{{row[2]}}{{'.jpg'}}" alt="User1" class="profile-pic">
+                    <div class="post">                        
+                        <img src="{{ url_for('static', filename='profile_pics/')}}{{row[3]}}" alt="User1" class="profile-pic">
+                        
                         <div class="post-content">
                             <span class="username">{{row[2]}}</span>
                             <p>{{row[1]}}</p>
